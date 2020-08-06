@@ -1,7 +1,6 @@
 [core]
 # The folder where your airflow pipelines live, most likely a
 # subfolder in a code repository. This path must be absolute.
-airflow_home = {{ AIRFLOW_HOME }}
 
 dags_folder = {{ AIRFLOW_HOME }}/dags
 
@@ -36,17 +35,11 @@ logging_config_class =
 colored_console_log = True
 
 # Log format for when Colored logs is enabled
-colored_log_format = [%%(blue)s%%(asctime)s%%(reset)s] {%%(blue)s%%(filename)s:%%(reset)s%%(lineno)d} %%(log_color)s%%(levelname)s%%(reset)s - %%(log_color)s%%(message)s%%(reset)s
 colored_formatter_class = airflow.utils.log.colored_log.CustomTTYColoredFormatter
 
 # Format of Log line
-log_format = [%%(asctime)s] {%%(filename)s:%%(lineno)d} %%(levelname)s - %%(message)s
-simple_log_format = %%(asctime)s %%(levelname)s - %%(message)s
 
 # Log filename format
-log_filename_template = {{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{{ try_number }}.log
-log_processor_filename_template = {{ filename }}.log
-dag_processor_manager_log_location = /data/sanic/airflow/logs/dag_processor_manager/dag_processor_manager.log
 
 # Name of handler to read task instance logs.
 # Default to use task handler.
@@ -144,10 +137,9 @@ load_examples = True
 load_default_connections = True
 
 # Where your Airflow plugins are stored
-fernet_key = {{ AIRFLOW_FERNET_KEY }}
 
 # Secret key to save connection passwords in the db
-fernet_key =
+fernet_key = {{ AIRFLOW_FERNET_KEY }}
 
 # Whether to disable pickling dags
 donot_pickle = False
@@ -626,7 +618,7 @@ print_stats_interval = 30
 # ago (in seconds), scheduler is considered unhealthy.
 # This is used by the health check in the "/health" endpoint
 scheduler_health_check_threshold = 30
-child_process_log_directory = /data/sanic/airflow/logs/scheduler
+child_process_log_directory = {AIRFLOW_HOME}/airflow/logs/scheduler
 
 # Local task jobs periodically heartbeat to the DB. If the job has
 # not heartbeat in this many seconds, the scheduler will mark the
@@ -776,8 +768,6 @@ write_stdout = False
 # Instead of the default log formatter, write the log lines as JSON
 json_format = False
 
-# Log fields to also attach to the json output, if enabled
-json_fields = asctime, filename, lineno, levelname, message
 
 [elasticsearch_configs]
 use_ssl = False

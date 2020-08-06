@@ -26,12 +26,12 @@ RUN apt-get update --fix-missing && \
         libffi-dev \
         libxml2-dev \
         libxslt-dev
-
+ENV FERNET_KEY=40u1ZtDjgFwVVL_uSEDQxGHZpmtH0qG52ofT2llbau4=
 ENV AIRFLOW_HOME=/usr/local/airflow
 ENV AIRFLOW_DAGS_WORKSPACE=${AIRFLOW_HOME}/workspace \
     AIRFLOW_DAGS_DIR=${AIRFLOW_HOME}/dags \
-    AIRFLOW_FERNET_KEY=some_very_secret_key \
-    AIRFLOW_WEBSERVER_SECRET_KEY=some_very_very_secret_key
+    AIRFLOW_FERNET_KEY=${FERNET_KEY} \
+    AIRFLOW_WEBSERVER_SECRET_KEY=${FERNET_KEY}
 
 RUN useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow
 
@@ -45,7 +45,7 @@ COPY config/ ${AIRFLOW_HOME}
 COPY bin/ ${AIRFLOW_HOME}
 RUN conda install --yes --file ${AIRFLOW_HOME}/requirements-conda.txt \
     && pip install -r ${AIRFLOW_HOME}/requirements-pip.txt \
-    && conda clean -i -l -t -y
+    && conda clean -i -t -y
 
 #
 # Install Airflow from the list of available options:

@@ -79,5 +79,7 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: testingtesting123
       MYSQL_PORT: 3306
+    command:
+      --explicit_defaults_for_timestamp=true
     ports:
     - "3306:3306"
