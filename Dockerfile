@@ -1,5 +1,5 @@
 # Based on https://github.com/puckel/docker-airflow and https://github.com/Drunkar/dockerfiles/tree/master/airflow
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # Define en_US.
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -32,11 +32,11 @@ ENV AIRFLOW_DAGS_WORKSPACE=${AIRFLOW_HOME}/workspace \
     AIRFLOW_DAGS_DIR=${AIRFLOW_HOME}/dags \
     AIRFLOW_FERNET_KEY=some_very_secret_key \
     AIRFLOW_WEBSERVER_SECRET_KEY=some_very_very_secret_key
-    
+
 RUN useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    curl https://repo.continuum.io/miniconda/Miniconda3-4.2.11-Linux-x86_64.sh -o ${AIRFLOW_HOME}/conda.sh && \
+    curl https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh -o ${AIRFLOW_HOME}/conda.sh && \
     /bin/bash ${AIRFLOW_HOME}/conda.sh -b -p /opt/conda && \
     rm ${AIRFLOW_HOME}/conda.sh
 
@@ -55,7 +55,8 @@ RUN conda install --yes --file ${AIRFLOW_HOME}/requirements-conda.txt \
 #
 # 2. Uncomment to pip install from a github repo/branch/commit.  YMMV.
 #
-RUN pip install -e git://github.com/apache/incubator-airflow.git@310fb589ae867ff2ec8b7ce3cc5b1659db4dad49#egg=airflow[celery,crypto,hive,jdbc,ldap,password,postgres,s3,vertica]
+RUN pip install apache-airflow[celery,crypto,mysql,jdbc,ldap,password,postgres,s3,vertica,presto,redis,ssh] -i \
+    https://mirrors.aliyun.com/pypi/simple/
 #
 # 3. Uncomment to git clone the repo, git checkout a branch, git reset to a commit, then build from source.
 #
