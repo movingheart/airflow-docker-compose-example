@@ -14,7 +14,7 @@ services:
     - airflow_scheduler
     environment:
       EXECUTOR: CeleryExecutor
-      SQLALCHEMY_DATABASE_URI: db+mysql://admin:testingtesting123@db:3306/airflow
+      SQLALCHEMY_DATABASE_URI: mysql://admin:testingtesting123@db:3306/airflow
       REDIS_URI: redis://airflow_redis
       FLOWER_HOST: 0.0.0.0
       AIRFLOW_RUNAS_WEBSERVER: 1
@@ -33,7 +33,7 @@ services:
     - airflow_scheduler
     environment:
       EXECUTOR: CeleryExecutor
-      SQLALCHEMY_DATABASE_URI: db+mysql://admin:testingtesting123@db:3306/airflow
+      SQLALCHEMY_DATABASE_URI: mysql://admin:testingtesting123@db:3306/airflow
       REDIS_URI: redis://airflow_redis
       AIRFLOW_RUNAS_FLOWER: 1
       FLOWER_HOST: 0.0.0.0
@@ -49,7 +49,7 @@ services:
     - airflow_redis
     environment:
       EXECUTOR: CeleryExecutor
-      SQLALCHEMY_DATABASE_URI: db+mysql://admin:testingtesting123@db:3306/airflow
+      SQLALCHEMY_DATABASE_URI: mysql://admin:testingtesting123@db:3306/airflow
       REDIS_URI: redis://airflow_redis
       FLOWER_HOST: 0.0.0.0
       AIRFLOW_RUNAS_SCHEDULER: 1
@@ -66,7 +66,7 @@ services:
     - airflow_scheduler
     environment:
       EXECUTOR: CeleryExecutor
-      SQLALCHEMY_DATABASE_URI: db+mysql://admin:testingtesting123@db:3306/airflow
+      SQLALCHEMY_DATABASE_URI: mysql://admin:testingtesting123@db:3306/airflow
       REDIS_URI: redis://airflow_redis
       FLOWER_HOST: 0.0.0.0
       AIRFLOW_RUNAS_WORKER: 1
