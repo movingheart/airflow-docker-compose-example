@@ -4,6 +4,20 @@ FROM ubuntu:18.04
 # Define en_US.
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
+# Airflow basic env
+ENV COLORED_LOG_FORMAT = '[%%(blue)s%%(asctime)s%%(reset)s] {%%(blue)s%%(filename)s:%%(reset)s%%(lineno)d} %%(log_color)s%%(levelname)s%%(reset)s - %%(log_color)s%%(message)s%%(reset)s'
+ENV LOG_FORMAT = '[%%(asctime)s] {%%(filename)s:%%(lineno)d} %%(levelname)s - %%(message)s'
+ENV SIMPLE_LOG_FORMAT = '%%(asctime)s %%(levelname)s - %%(message)s'
+ENV LOG_FILENAME_TEMPLATE = '{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{{ try_number }}.log'
+ENV LOG_PROCESSOR_FILENAME_TEMPLATE = '{{ filename }}.log'
+ENV LOG_ID_TEMPLATE = '{dag_id}-{task_id}-{execution_date}-{try_number}'
+ENV SMTP_HOST = smtp.exmail.qq.com
+ENV SMTP_STARTTLS = False
+ENV SMTP_SSL = True
+ENV SMTP_PASSWORD = BDreports1234
+ENV SMTP_PORT = 465
+ENV SMTP_MAIL_FROM = bigdata-reports@infinities.com.cn
+
 RUN apt-get update --fix-missing && \
     apt-get -y install \
         build-essential \
@@ -26,7 +40,7 @@ RUN apt-get update --fix-missing && \
         libffi-dev \
         libxml2-dev \
         libxslt-dev
-ENV FERNET_KEY=40u1ZtDjgFwVVL_uSEDQxGHZpmtH0qG52ofT2llbau4=
+ENV FERNET_KEY='40u1ZtDjgFwVVL_uSEDQxGHZpmtH0qG52ofT2llbau4='
 ENV AIRFLOW_HOME=/usr/local/airflow
 ENV AIRFLOW_DAGS_WORKSPACE=${AIRFLOW_HOME}/workspace \
     AIRFLOW_DAGS_DIR=${AIRFLOW_HOME}/dags \
@@ -55,9 +69,8 @@ RUN conda install --yes --file ${AIRFLOW_HOME}/requirements-conda.txt \
 #
 # 2. Uncomment to pip install from a github repo/branch/commit.  YMMV.
 #
-RUN pip install apache-airflow[celery,crypto,mysql,jdbc,ldap,password,postgres,s3,vertica,presto,redis,ssh] -i \
+RUN pip install apache-airflow[celery,crypto,mysql,jdbc,password,postgres,s3,vertica,presto,redis,ssh] -i \
     https://mirrors.aliyun.com/pypi/simple/
-RUN pip install 'flask-appbuilder==1.11.1' -i https://mirrors.aliyun.com/pypi/simple/
 #
 # 3. Uncomment to git clone the repo, git checkout a branch, git reset to a commit, then build from source.
 #

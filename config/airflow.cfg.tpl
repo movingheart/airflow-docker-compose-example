@@ -1,12 +1,11 @@
 [core]
 # The folder where your airflow pipelines live, most likely a
 # subfolder in a code repository. This path must be absolute.
-
-dags_folder = {{ AIRFLOW_HOME }}/dags
+dags_folder = {{AIRFLOW_HOME}}/dags
 
 # The folder where airflow should store its log files
 # This path must be absolute
-base_log_folder = {{ AIRFLOW_HOME }}/logs
+base_log_folder = {{AIRFLOW_HOME}}/logs
 
 # Airflow can store logs remotely in AWS S3, Google Cloud Storage or Elastic Search.
 # Set this to True if you want to enable remote logging.
@@ -35,11 +34,17 @@ logging_config_class =
 colored_console_log = True
 
 # Log format for when Colored logs is enabled
+colored_log_format = {{COLORED_LOG_FORMAT}}
 colored_formatter_class = airflow.utils.log.colored_log.CustomTTYColoredFormatter
 
 # Format of Log line
+log_format = {{LOG_FORMAT}}
+simple_log_format = {{SIMPLE_LOG_FORMAT}}
 
 # Log filename format
+log_filename_template = {{LOG_FILENAME_TEMPLATE}}
+log_processor_filename_template = {{LOG_PROCESSOR_FILENAME_TEMPLATE}}
+dag_processor_manager_log_location = {{AIRFLOW_HOME}}/logs/dag_processor_manager/dag_processor_manager.log
 
 # Name of handler to read task instance logs.
 # Default to use task handler.
@@ -61,13 +66,14 @@ default_timezone = Aisa/Shanghai
 
 # The executor class that airflow should use. Choices include
 # SequentialExecutor, LocalExecutor, CeleryExecutor, DaskExecutor, KubernetesExecutor
-executor = CeleryExecutor
+executor = {{EXECUTOR}}
+#executor = CeleryExecutor
 
 # The SqlAlchemy connection string to the metadata database.
 # SqlAlchemy supports many different database engine, more information
 # their website
 #sql_alchemy_conn = mysql://airflow:airflow@localhost:3306/airflow
-sql_alchemy_conn = {{ SQLALCHEMY_DATABASE_URI }}
+sql_alchemy_conn = {{SQLALCHEMY_DATABASE_URI}}
 
 # The encoding for the databases
 sql_engine_encoding = utf-8
@@ -137,9 +143,10 @@ load_examples = True
 load_default_connections = True
 
 # Where your Airflow plugins are stored
+plugins_folder = {{AIRFLOW_HOME}}/plugins
 
 # Secret key to save connection passwords in the db
-fernet_key = {{ AIRFLOW_FERNET_KEY }}
+fernet_key = {{FERNET_KEY}}
 
 # Whether to disable pickling dags
 donot_pickle = False
@@ -247,7 +254,7 @@ fail_fast = False
 # How to authenticate users of the API. See
 # https://airflow.apache.org/docs/stable/security.html for possible values.
 # ("airflow.api.auth.backend.default" allows all requests for historic reasons)
-auth_backend = airflow.api.auth.backend.default
+auth_backend = airflow.api.auth.backend.deny_all
 
 [lineage]
 # what lineage backend to use
@@ -319,7 +326,7 @@ reload_on_plugin_change = False
 
 # Secret key used to run your flask app
 # It should be as random as possible
-secret_key = {{ AIRFLOW_WEBSERVER_SECRET_KEY }}
+secret_key = temporary_key
 
 # Number of workers to run the Gunicorn web server
 workers = 4
@@ -346,10 +353,9 @@ expose_stacktrace = True
 # Set to true to turn on authentication:
 # https://airflow.apache.org/security.html#web-authentication
 authenticate = True
-auth_backend = airflow.contrib.auth.backends.password_auth
 
 # Filter the list of dags by owner name (requires authentication to be enabled)
-filter_by_owner = True
+filter_by_owner = False
 
 # Filtering mode. Choices include user (default) and ldapgroup.
 # Ldap group filtering requires using the ldap backend
@@ -456,15 +462,15 @@ email_backend = airflow.utils.email.send_email_smtp
 # If you want airflow to send emails on retries, failure, and you want to use
 # the airflow.utils.email.send_email_smtp function, you have to configure an
 # smtp server here
-smtp_host = smtp.exmail.qq.com
-smtp_starttls = False
-smtp_ssl = True
+smtp_host = {{SMTP_HOST}}
+smtp_starttls = {{SMTP_STARTTLS}}
+smtp_ssl = {{SMTP_SSL}}
 # Example: smtp_user = airflow
 # smtp_user =
 # Example: smtp_password = airflow
-smtp_password = BDreports1234
-smtp_port = 465
-smtp_mail_from = bigdata-reports@infinities.com.cn
+smtp_password = {{SMTP_PASSWORD}}
+smtp_port = {{SMTP_PORT}}
+smtp_mail_from = {{SMTP_MAIL_FROM}}
 
 [sentry]
 
@@ -504,7 +510,7 @@ worker_log_server_port = 8793
 # a sqlalchemy database. Refer to the Celery documentation for more
 # information.
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#broker-settings
-broker_url = {{ REDIS_URI }}
+broker_url = {{REDIS_URI}}
 
 # The Celery result_backend. When a job finishes, it needs to update the
 # metadata of the job. Therefore it will post a message on a message bus,
@@ -512,11 +518,11 @@ broker_url = {{ REDIS_URI }}
 # This status is used by the scheduler to update the state of the task
 # The use of a database is highly recommended
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-result-backend-settings
-result_backend = {{ REDIS_URI }}
+result_backend = {{SQLALCHEMY_DATABASE_URI}}
 
 # Celery Flower is a sweet UI for Celery. Airflow has a shortcut to start
 # it ``airflow flower``. This defines the IP that Celery Flower runs on
-flower_host = {{ FLOWER_HOST }}
+flower_host = {{FLOWER_HOST}}
 
 # The root URL for Flower
 # Example: flower_url_prefix = /flower
@@ -619,7 +625,7 @@ print_stats_interval = 30
 # ago (in seconds), scheduler is considered unhealthy.
 # This is used by the health check in the "/health" endpoint
 scheduler_health_check_threshold = 30
-child_process_log_directory = {AIRFLOW_HOME}/airflow/logs/scheduler
+child_process_log_directory = {{AIRFLOW_HOME}}/logs/scheduler
 
 # Local task jobs periodically heartbeat to the DB. If the job has
 # not heartbeat in this many seconds, the scheduler will mark the
@@ -753,7 +759,7 @@ hide_sensitive_variable_fields = True
 host =
 
 # Format of the log_id, which is used to query for a given tasks logs
-log_id_template = {dag_id}-{task_id}-{execution_date}-{try_number}
+log_id_template = {{LOG_ID_TEMPLATE}}
 
 # Used to mark the end of a log stream for a task
 end_of_log_mark = end_of_log
@@ -769,6 +775,8 @@ write_stdout = False
 # Instead of the default log formatter, write the log lines as JSON
 json_format = False
 
+# Log fields to also attach to the json output, if enabled
+json_fields = asctime, filename, lineno, levelname, message
 
 [elasticsearch_configs]
 use_ssl = False
