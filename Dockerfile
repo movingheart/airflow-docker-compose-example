@@ -42,7 +42,7 @@ RUN apt-get update --fix-missing && \
         libxml2-dev \
         libxslt-dev
 ENV FERNET_KEY='40u1ZtDjgFwVVL_uSEDQxGHZpmtH0qG52ofT2llbau4='
-ENV AIRFLOW_HOME=/usr/local/airflow
+ENV AIRFLOW_HOME=/home/airflow
 ENV AIRFLOW_DAGS_WORKSPACE=${AIRFLOW_HOME}/workspace \
     AIRFLOW_DAGS_DIR=${AIRFLOW_HOME}/dags \
     AIRFLOW_FERNET_KEY=${FERNET_KEY} \
@@ -88,7 +88,7 @@ RUN chmod 0644 ${AIRFLOW_HOME}/.config/matplotlib/matplotlibrc
 # Uncomment if you want to install your own dags.
 #COPY dags/ /usr/local/airflow/dags
 
-RUN chown -R airflow:airflow ${AIRFLOW_HOME} \
+RUN chown -R airflow: ${AIRFLOW_HOME} \
     && chmod +x ${AIRFLOW_HOME}/docker-entrypoint.sh \
     && chmod +x ${AIRFLOW_HOME}/wait-for-it.sh
 
