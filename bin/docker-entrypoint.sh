@@ -9,6 +9,7 @@ if [ "$AIRFLOW_RUNAS_SCHEDULER" = "1" ]; then
     echo "initializing airflow database"
     airflow initdb
     python ./add_user.py
+    airflow create_user -r Admin -u airflow -e airflow@example.com -f air -l flow -p airflow123
     echo "running airflow scheduler"
     while true
     do
@@ -19,6 +20,7 @@ if [ "$AIRFLOW_RUNAS_SCHEDULER" = "1" ]; then
 elif [ "$AIRFLOW_RUNAS_WEBSERVER" = "1" ]; then
     echo "running airflow webserver"
     exec airflow webserver -p 8080
+    exec airflow create_user -r Admin -u airflow -e airflow@example.com -f air -l flow -p airflow123
 elif [ "$AIRFLOW_RUNAS_WORKER" = "1" ]; then
     echo "running airflow worker"
     exec airflow worker
