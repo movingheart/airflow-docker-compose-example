@@ -5,10 +5,6 @@ set -e
 # update templates based on environment variables
 envtpl -o ${AIRFLOW_HOME}/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg.tpl
 
-# add user
-python ./add_user.py
-airflow create_user -r Admin -u airflow -e airflow@example.com -f air -l flow -p airflow123
-
 if [ "$AIRFLOW_RUNAS_SCHEDULER" = "1" ]; then
     echo "initializing airflow database"
     airflow initdb
@@ -22,6 +18,8 @@ if [ "$AIRFLOW_RUNAS_SCHEDULER" = "1" ]; then
 elif [ "$AIRFLOW_RUNAS_WEBSERVER" = "1" ]; then
     echo "running airflow webserver"
     exec airflow webserver -p 8080
+    # add user
+    exec airflow create_user -r Admin -u airflow -e airflow@example.com -f air -l flow -p airflow123
 elif [ "$AIRFLOW_RUNAS_WORKER" = "1" ]; then
     echo "running airflow worker"
     exec airflow worker
