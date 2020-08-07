@@ -57,7 +57,7 @@ RUN conda install --yes --file ${AIRFLOW_HOME}/requirements-conda.txt \
 #
 RUN pip install apache-airflow[celery,crypto,mysql,jdbc,ldap,password,postgres,s3,vertica,presto,redis,ssh] -i \
     https://mirrors.aliyun.com/pypi/simple/
-RUN pip install 'flask-appbuilder==1.11.1'
+RUN pip install 'flask-appbuilder==1.11.1' -i https://mirrors.aliyun.com/pypi/simple/
 #
 # 3. Uncomment to git clone the repo, git checkout a branch, git reset to a commit, then build from source.
 #
