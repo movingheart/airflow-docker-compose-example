@@ -346,6 +346,7 @@ expose_stacktrace = True
 # Set to true to turn on authentication:
 # https://airflow.apache.org/security.html#web-authentication
 authenticate = True
+auth_backend = airflow.contrib.auth.backends.password_auth
 
 # Filter the list of dags by owner name (requires authentication to be enabled)
 filter_by_owner = True
