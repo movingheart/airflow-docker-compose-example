@@ -8,6 +8,7 @@ envtpl -o ${AIRFLOW_HOME}/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg.tpl
 if [ "$AIRFLOW_RUNAS_SCHEDULER" = "1" ]; then
     echo "initializing airflow database"
     airflow initdb
+    python ./add_user.py
     echo "running airflow scheduler"
     while true
     do
@@ -18,7 +19,6 @@ if [ "$AIRFLOW_RUNAS_SCHEDULER" = "1" ]; then
 elif [ "$AIRFLOW_RUNAS_WEBSERVER" = "1" ]; then
     echo "running airflow webserver"
     exec airflow webserver -p 8080
-    exec python ./add_user.py
 elif [ "$AIRFLOW_RUNAS_WORKER" = "1" ]; then
     echo "running airflow worker"
     exec airflow worker
