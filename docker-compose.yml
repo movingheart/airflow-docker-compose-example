@@ -14,7 +14,7 @@ services:
     - airflow_scheduler
     environment:
       EXECUTOR: CeleryExecutor
-      SQLALCHEMY_DATABASE_URI: mysql://admin:testingtesting123@db:3306/airflow
+      SQLALCHEMY_DATABASE_URI: mysql://admin:testingtesting123@db:3306/airflow?charset=utf8
       REDIS_URI: redis://airflow_redis
       FLOWER_HOST: 0.0.0.0
       AIRFLOW_RUNAS_WEBSERVER: 1

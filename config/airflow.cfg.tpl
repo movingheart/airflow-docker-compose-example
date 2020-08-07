@@ -518,7 +518,7 @@ broker_url = {{REDIS_URI}}
 # This status is used by the scheduler to update the state of the task
 # The use of a database is highly recommended
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-result-backend-settings
-result_backend = {{SQLALCHEMY_DATABASE_URI}}
+result_backend = db+{{SQLALCHEMY_DATABASE_URI}}
 
 # Celery Flower is a sweet UI for Celery. Airflow has a shortcut to start
 # it ``airflow flower``. This defines the IP that Celery Flower runs on
