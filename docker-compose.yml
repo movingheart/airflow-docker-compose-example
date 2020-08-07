@@ -70,7 +70,7 @@ services:
 
   airflow_redis:
     image: redis:3.2
-  
+
   db:
     image: mysql:5.7
     environment:
