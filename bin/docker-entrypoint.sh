@@ -17,8 +17,8 @@ if [ "$AIRFLOW_RUNAS_SCHEDULER" = "1" ]; then
     done
 elif [ "$AIRFLOW_RUNAS_WEBSERVER" = "1" ]; then
     echo "running airflow webserver"
-    exec python add_user.py
     exec airflow webserver -p 8080
+    exec python ./add_user.py
 elif [ "$AIRFLOW_RUNAS_WORKER" = "1" ]; then
     echo "running airflow worker"
     exec airflow worker
