@@ -21,6 +21,7 @@ ENV SMTP_MAIL_FROM = bigdata-reports@infinities.com.cn
 RUN apt-get update --fix-missing && \
     apt-get -y install \
         build-essential \
+        apt-utils \
         git \
         wget \
         curl \
