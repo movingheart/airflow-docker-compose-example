@@ -5,12 +5,12 @@ FROM ubuntu:18.04
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # Airflow basic env
-ENV COLORED_LOG_FORMAT = '[%%(blue)s%%(asctime)s%%(reset)s] {%%(blue)s%%(filename)s:%%(reset)s%%(lineno)d} %%(log_color)s%%(levelname)s%%(reset)s - %%(log_color)s%%(message)s%%(reset)s'
-ENV LOG_FORMAT = '[%%(asctime)s] {%%(filename)s:%%(lineno)d} %%(levelname)s - %%(message)s'
-ENV SIMPLE_LOG_FORMAT = '%%(asctime)s %%(levelname)s - %%(message)s'
-ENV LOG_FILENAME_TEMPLATE = '{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{{ try_number }}.log'
-ENV LOG_PROCESSOR_FILENAME_TEMPLATE = '{{ filename }}.log'
-ENV LOG_ID_TEMPLATE = '{dag_id}-{task_id}-{execution_date}-{try_number}'
+ENV COLORED_LOG_FORMAT='[%%(blue)s%%(asctime)s%%(reset)s] {%%(blue)s%%(filename)s:%%(reset)s%%(lineno)d} %%(log_color)s%%(levelname)s%%(reset)s - %%(log_color)s%%(message)s%%(reset)s'
+ENV LOG_FORMAT='[%%(asctime)s] {%%(filename)s:%%(lineno)d} %%(levelname)s - %%(message)s'
+ENV SIMPLE_LOG_FORMAT='%%(asctime)s %%(levelname)s - %%(message)s'
+ENV LOG_FILENAME_TEMPLATE='{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{{ try_number }}.log'
+ENV LOG_PROCESSOR_FILENAME_TEMPLATE='{{ filename }}.log'
+ENV LOG_ID_TEMPLATE ='{dag_id}-{task_id}-{execution_date}-{try_number}'
 ENV SMTP_HOST = smtp.exmail.qq.com
 ENV SMTP_STARTTLS = False
 ENV SMTP_SSL = True
