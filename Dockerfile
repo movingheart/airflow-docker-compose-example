@@ -88,7 +88,7 @@ RUN chmod 0644 ${AIRFLOW_HOME}/.config/matplotlib/matplotlibrc
 # Uncomment if you want to install your own dags.
 #COPY dags/ /usr/local/airflow/dags
 
-RUN chown -R airflow: ${AIRFLOW_HOME} \
+RUN chown -R airflow:airflow ${AIRFLOW_HOME} \
     && chmod +x ${AIRFLOW_HOME}/docker-entrypoint.sh \
     && chmod +x ${AIRFLOW_HOME}/wait-for-it.sh
 
