@@ -1,3 +1,4 @@
+docutils==0.16
 ipython==6.5.0
 jsonschema==3.2.0
 matplotlib==2.2.3
